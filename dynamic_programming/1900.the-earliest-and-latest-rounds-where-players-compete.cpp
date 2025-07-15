@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 
 class Solution {
@@ -69,3 +70,14 @@ public:
 };
 // @lc code=end
 
+int main() {
+    Solution sol;
+    int n = 11, firstPlayer = 2, secondPlayer = 4;
+
+    auto res = sol.earliestAndLatest(n, firstPlayer, secondPlayer);
+
+    std::cout << "Earliest round: " << res[0] << std::endl;
+    std::cout << "Latest round: " << res[1] << std::endl;
+
+    return 0;
+}
