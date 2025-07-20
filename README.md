@@ -22,7 +22,7 @@ It includes problems and solutions from LeetCode and other platforms.
 
 | Platform    | Solved | Notes           |
 |-------------|--------|-----------------|
-| LeetCode    | 12     | Continuously updating |
+| LeetCode    | 15     | Continuously updating |
 
 ## 🛠 Environment
 
