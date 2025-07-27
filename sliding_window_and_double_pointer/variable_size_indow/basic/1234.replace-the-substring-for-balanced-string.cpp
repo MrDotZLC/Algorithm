@@ -1,0 +1,95 @@
+/*
+ * @lc app=leetcode id=1234 lang=cpp
+ *
+ * [1234] Replace the Substring for Balanced String
+ *
+ * https://leetcode.com/problems/replace-the-substring-for-balanced-string/description/
+ *
+ * algorithms
+ * Medium (39.77%)
+ * Likes:    1254
+ * Dislikes: 223
+ * Total Accepted:    42.2K
+ * Total Submissions: 106K
+ * Testcase Example:  '"QWER"'
+ *
+ * You are given a string s of length n containing only four kinds of
+ * characters: 'Q', 'W', 'E', and 'R'.
+ * 
+ * A string is said to be balanced if each of its characters appears n / 4
+ * times where n is the length of the string.
+ * 
+ * Return the minimum length of the substring that can be replaced with any
+ * other string of the same length to make s balanced. If s is already
+ * balanced, return 0.
+ * 
+ * 
+ * Example 1:
+ * 
+ * 
+ * Input: s = "QWER"
+ * Output: 0
+ * Explanation: s is already balanced.
+ * 
+ * 
+ * Example 2:
+ * 
+ * 
+ * Input: s = "QQWE"
+ * Output: 1
+ * Explanation: We need to replace a 'Q' to 'R', so that "RQWE" (or "QRWE") is
+ * balanced.
+ * 
+ * 
+ * Example 3:
+ * 
+ * 
+ * Input: s = "QQQW"
+ * Output: 2
+ * Explanation: We can replace the first "QQ" to "ER". 
+ * 
+ * 
+ * 
+ * Constraints:
+ * 
+ * 
+ * n == s.length
+ * 4 <= n <= 10^5
+ * n is a multiple of 4.
+ * s contains only 'Q', 'W', 'E', and 'R'.
+ * 
+ * 
+ */
+#include <vector>
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+// @lc code=start
+class Solution {
+public:
+    int balancedString(string s) {
+        int res = INT_MAX, n = s.length(), l = 0;
+        int freq[128] = {};
+        for (char c : s) {
+            ++freq[c];
+        }
+        int quota = n / 4;
+        if (freq['Q'] == quota && freq['W'] == quota && 
+                freq['E'] == quota && freq['R'] == quota) {
+            return 0;
+        }
+        for (int r = 0; r < n; r++) {
+            --freq[s[r]];
+            while (freq['Q'] <= quota && freq['W'] <= quota && 
+                freq['E'] <= quota && freq['R'] <= quota) {
+                res = min(res, r - l + 1);
+                ++freq[s[l++]];
+            }
+        }
+
+        return res;
+    }
+};
+// @lc code=end
+
