@@ -1,6 +1,6 @@
 BasedOnStyle: Google                      # 基于 Google 风格作为默认配置
 IndentWidth: 4                            # 使用 4 个空格作为缩进
-ColumnLimit: 100                          # 每行最大长度为 100 列
+ColumnLimit: 70                           # 每行最大长度为 70 列
 AllowShortFunctionsOnASingleLine: Inline  # 短函数（函数体很短）允许写在单行内
 BreakBeforeBraces: Attach                 # 大括号与语句同行 (K&R 风格)，例如 `if () {`
 DerivePointerAlignment: false             # 不自动推导指针对齐方式，使用手动指定
