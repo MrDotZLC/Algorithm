@@ -8,4 +8,4 @@ PointerAlignment: Right                   # 指针符号 `*` 靠近变量名，�
 SpacesInParentheses: false                # 括号内不加空格，例如 `func(a, b)` 而不是 `func( a, b )`
 SpaceAfterCStyleCast: true                # C 风格强制类型转换后加空格，例如 `(int) x`
 SortIncludes: false                       # 不自动对 include 头文件排序
-AccessModifierOffset: 0                   # 类的访问修饰符（public/private/protected）顶格对齐
+AccessModifierOffset: -4                   # 类的访问修饰符（public/private/protected）顶格对齐
