@@ -7,7 +7,7 @@
             "command": "powershell",
             "args": [
                 "-Command",
-                "if (!(Test-Path -Path '${workspaceFolder}\\.build')) { New-Item -ItemType Directory -Path '${workspaceFolder}\\.build' }; g++ -g '${file}' -o '${workspaceFolder}\\.build\\${fileBasenameNoExtension}.exe'"
+                "if (!(Test-Path -Path '${workspaceFolder}\\.build')) { New-Item -ItemType Directory -Path '${workspaceFolder}\\.build' }; g++ -g -I${workspaceFolder}\\Algorithm\\ '${file}' -o '${workspaceFolder}\\.build\\${fileBasenameNoExtension}.exe'"
             ],
             "group": "build",
             "problemMatcher": [
@@ -20,6 +20,7 @@
             "command": "C:/msys64/ucrt64/bin/g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
+                "-I${workspaceFolder}\\Algorithm\\",
                 "-g",
                 "${file}",
                 "-o",
