@@ -61,6 +61,8 @@
  * 
  */
 #include "template.h"
+#include <deque>
+using namespace std;
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -75,7 +77,7 @@
  */
 class Solution {
 public:
-    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+    TreeNode* addOneRow1(TreeNode* root, int val, int depth) {
         TreeNode dummy(0, root, nullptr);
         TreeNode *cur = &dummy;
         auto dfs = [&](auto &dfs, TreeNode* node, int d) -> void {
@@ -94,6 +96,39 @@ public:
         };
         dfs(dfs, cur, 0);
         return dummy.left;
+    }
+
+    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+        if (depth == 1) {
+            return new TreeNode(val, root, nullptr);
+        }
+        deque<TreeNode*> q;
+        q.push_back(root);
+        int d = 1;
+        while (!q.empty()) {
+            int i = q.size();
+            while (i--) {
+                auto node = q.front();
+                q.pop_front();
+                if (d == depth - 1) {
+                    TreeNode *l = new TreeNode(val, node->left, nullptr);
+                    TreeNode *r = new TreeNode(val, nullptr, node->right);
+                    node->left = l;
+                    node->right = r;
+                    q.push_back(l);
+                    q.push_back(r);
+                } else {
+                    if (node->left) {
+                        q.push_back(node->left);
+                    }
+                    if (node->right) {
+                        q.push_back(node->right);
+                    }
+                }
+            }
+            d++;
+        }
+        return root;
     }
 };
 // @lc code=end

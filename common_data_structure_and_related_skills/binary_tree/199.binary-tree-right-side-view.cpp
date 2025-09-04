@@ -69,6 +69,7 @@
  */
 #include "template.h"
 #include <vector>
+#include <deque>
 using namespace std;
 // @lc code=start
 /**
@@ -84,7 +85,7 @@ using namespace std;
  */
 class Solution {
 public:
-    vector<int> rightSideView(TreeNode* root) {
+    vector<int> rightSideView1(TreeNode* root) {
         if (!root) {
             return {};
         }
@@ -102,6 +103,32 @@ public:
             dfs(dfs, node->left, cnt);
         };
         dfs(dfs, root, 0);
+        return ans;
+    }
+
+    vector<int> rightSideView(TreeNode* root) {
+        if (!root) {
+            return {};
+        }
+        vector<int> ans;
+        deque<TreeNode*> q;
+        q.push_back(root);
+        while (!q.empty()) {
+            vector<int> t;
+            int i = q.size();
+            while (i--) {
+                auto node = q.front();
+                q.pop_front();
+                t.push_back(node->val);
+                if (node->left) {
+                    q.push_back(node->left);
+                }
+                if (node->right) {
+                    q.push_back(node->right);
+                }
+            }
+            ans.push_back(t.back());
+        }
         return ans;
     }
 };
