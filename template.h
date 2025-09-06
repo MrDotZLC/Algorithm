@@ -1,5 +1,6 @@
 // template.h
 #include <algorithm>
+#include <vector>
 #ifndef TEMPLATE_H
 #define TEMPLATE_H
 
@@ -24,16 +25,52 @@ struct ListNode {
 class Node {
 public:
     int val;
+    bool isLeaf;
     Node *left;
     Node *right;
     Node *next;
+    Node *topLeft;
+    Node *topRight;
+    Node *bottomLeft;
+    Node *bottomRight;
+    vector<Node *> children;
 
-    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+    Node()
+        : val(0),
+          isLeaf(false),
+          left(NULL),
+          right(NULL),
+          next(NULL) {}
 
     Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
 
+    Node(bool _val, bool _isLeaf)
+        : val(_val),
+          isLeaf(_isLeaf),
+          topLeft(nullptr),
+          topRight(nullptr),
+          bottomLeft(nullptr),
+          bottomRight(nullptr) {}
+
+    Node(int _val, Node *_next) : val(_val), next(_next) {}
+
+    Node(int _val, vector<Node *> _children)
+        : val(_val), children(_children) {}
+
+    Node(int _val, Node *_left, Node *_right)
+        : val(_val), left(_left), right(_right) {}
+
     Node(int _val, Node *_left, Node *_right, Node *_next)
         : val(_val), left(_left), right(_right), next(_next) {}
+
+    Node(bool _val, bool _isLeaf, Node *_topLeft, Node *_topRight,
+         Node *_bottomLeft, Node *_bottomRight)
+        : val(_val),
+          isLeaf(_isLeaf),
+          topLeft(_topLeft),
+          topRight(_topRight),
+          bottomLeft(_bottomLeft),
+          bottomRight(_bottomRight) {}
 };
 
 class DoublyListNode {
