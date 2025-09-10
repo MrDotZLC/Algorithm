@@ -119,7 +119,7 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-    int minIncrease(int n, vector<vector<int>>& edges, vector<int>& cost) {
+    int minIncrease1(int n, vector<vector<int>>& edges, vector<int>& cost) {
         vector<vector<int>> g(n);
         for (auto &e : edges) {
             int x = e[0], y = e[1];
@@ -148,6 +148,43 @@ public:
             return mx + cost[x];
         };
         dfs(dfs, 0, -1);
+        return ans;
+    }
+
+    int minIncrease(int n, vector<vector<int>>& edges, vector<int>& cost) {
+        vector<vector<int>> g(n);
+        for (auto &e : edges) {
+            int x = e[0], y = e[1];
+            g[x].push_back(y);
+            g[y].push_back(x);
+        }
+        g[0].push_back(-1);
+
+        int ans = 0;
+        auto dfs = [&](auto &dfs, int x, int parent, long long path_sum) -> long long {
+            path_sum += cost[x];
+            if (g[x].size() == 1) {
+                return path_sum;
+            }
+            
+            long long mx = 0;
+            int cnt = 0;
+            for (int y : g[x]) {
+                if (y != parent) {
+                    long long mx_s = dfs(dfs, y, x, path_sum);
+                    if (mx_s > mx) {
+                        mx = mx_s;
+                        cnt = 1;
+                    } else if (mx_s == mx) {
+                        cnt++;
+                    }
+                }
+            }
+
+            ans += g[x].size() - 1 - cnt;
+            return mx;
+        };
+        dfs(dfs, 0, -1, 0);
         return ans;
     }
 };
