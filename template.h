@@ -4,6 +4,7 @@
 #ifndef TEMPLATE_H
 #define TEMPLATE_H
 
+// 通用树节点
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -14,6 +15,7 @@ struct TreeNode {
         : val(x), left(left), right(right) {}
 };
 
+// 通用链表节点
 struct ListNode {
     int val;
     ListNode *next;
@@ -22,6 +24,7 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+// 通用节点
 class Node {
 public:
     int val;
@@ -73,6 +76,7 @@ public:
           bottomRight(_bottomRight) {}
 };
 
+// 双向链表节点
 class DoublyListNode {
 public:
     int val;
@@ -89,6 +93,7 @@ public:
     }
 };
 
+// 链表
 class MyLinkedList {
 public:
     MyLinkedList() {
@@ -171,6 +176,7 @@ private:
     ListNode *dummy;
 };
 
+// 双向链表
 class MyDoublyLinkedList {
 public:
     MyDoublyLinkedList() {
