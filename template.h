@@ -1,6 +1,7 @@
 // template.h
 #include <algorithm>
 #include <vector>
+#include <unordered_map>
 #ifndef TEMPLATE_H
 #define TEMPLATE_H
 
@@ -267,6 +268,62 @@ private:
     int size;
     DoublyListNode *dummy;
     DoublyListNode *tail;
+};
+
+// 字典树节点
+struct TrieNode {
+    bool _is_word;
+    unordered_map<char, TrieNode *> _childrens;
+};
+// 字典树
+class Trie {
+private:
+    TrieNode *_root;
+
+public:
+    Trie() {
+        _root = new TrieNode();
+    }
+
+    // 插入单词
+    void insert_word(const string &word){
+        TrieNode *node = _root;
+        for (char c : word) {
+            if (!node->_childrens[c]) {
+                node->_childrens[c] = new TrieNode();
+            }
+            node = node->_childrens[c];
+        }
+        node->_is_word = true;
+    }
+
+    // 单词是否存在
+    bool search(const string &word) {
+        TrieNode *node = _root;
+        for (char c : word) {
+            if (!node->_childrens[c]) {
+                return false;
+            }
+            node = node->_childrens[c];
+        }
+        return node->_is_word;
+    }
+
+    // 以prefix为前缀的单词是否存在
+    bool search_by_prefix(const string &prefix) {
+        TrieNode *node = _root;
+        for (char c : prefix) {
+            if (!node->_childrens[c]) {
+                return false;
+            }
+            node = node->_childrens[c];
+        }
+        return true;
+    }
+
+    TrieNode *get_root() {
+        return _root;
+    }
 };
 
 #endif

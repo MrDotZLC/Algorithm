@@ -60,11 +60,12 @@
 #include <vector>
 #include <numeric>
 #include <cmath>
+#include <set>
 using namespace std;
 // @lc code=start
 class Solution {
 public:
-    bool checkEqualPartitions(vector<int>& nums, long long target) {
+    bool checkEqualPartitions1(vector<int>& nums, long long target) {
         int n = nums.size();
 
         auto dfs = [&](this auto &&dfs, int i, long long cur1, long long cur2) -> bool {
@@ -79,6 +80,51 @@ public:
         };
 
         return dfs(0, 1, 1);
+    }
+
+    // half + enum
+    // 分成两个数组A、B，A选一些数到子集1，这些元素积为a1，同理得a2、b1、b2，
+    // 有提议得：(a1 / a2) == (b1 / b2)，使用set维护等式左右，存在交集则结果为true
+    bool checkEqualPartitions(vector<int>& nums, long long target) {
+        __int128_t prod_all = 1;
+        for (int x : nums) {
+            prod_all *= x;
+        }
+
+        if (prod_all != (__int128_t) target * target) {
+            return false;
+        }
+
+        int m = nums.size() / 2;
+        auto set1 = calc({nums.begin(), nums.begin() + m}, target);
+        auto set2 = calc({nums.begin() + m, nums.end()}, target);
+
+        for (auto &p : set1) {
+            if (set2.contains(p)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    set<pair<long long, long long>> calc(const vector<int> &nums, long long target) {
+        set<pair<long long, long long>> set;
+        auto dfs = [&](auto &dfs, int i, long long mult1, long long mult2) -> void {
+            if (mult1 > target || mult2 > target) {
+                return;
+            }
+            if (i == nums.size()) {
+                long long g = gcd(mult1, mult2);
+                set.emplace(mult1 / g, mult2 / g);
+                return;
+            }
+
+            dfs(dfs, i + 1, mult1 * nums[i], mult2);
+            dfs(dfs, i + 1, mult1, mult2 * nums[i]);
+        };
+        dfs(dfs, 0, 1, 1);
+        return set;
     }
 };
 // @lc code=end
