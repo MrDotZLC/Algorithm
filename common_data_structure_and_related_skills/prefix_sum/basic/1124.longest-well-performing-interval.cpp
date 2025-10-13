@@ -56,7 +56,8 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-    int longestWPI(vector<int>& hours) {
+    // 前缀和
+    int longestWPI1(vector<int>& hours) {
         int n = hours.size(), ans = 0, sum = 0;
         vector<int> pos(n + 2); // 记录前缀和首次出现的位置
         for (int i = 1; i <= n; ++i) {
@@ -70,6 +71,26 @@ public:
                 if (pos[sum] == 0) {
                     pos[sum] = i;
                 }
+            }
+        }
+        return ans;
+    }
+
+    // 前缀和 + 栈
+    int longestWPI(vector<int>& hours) {
+        int n = hours.size(), ans = 0, s[n + 1];
+        vector<int> stk;
+        stk.push_back(s[0] = 0);
+        for (int j = 1; j <= n; j++) {
+            s[j] = s[j - 1] + (hours[j - 1] > 8 ? 1 : -1);
+            if (s[j] < s[stk.back()]) {
+                stk.push_back(j);
+            }
+        }
+        for (int i = n; i; i--) {
+            while (!stk.empty() && s[i] > s[stk.back()]) {
+                ans = max(ans, i - stk.back());
+                stk.pop_back();
             }
         }
         return ans;
