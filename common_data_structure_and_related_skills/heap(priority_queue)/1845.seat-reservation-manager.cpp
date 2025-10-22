@@ -1,0 +1,110 @@
+/*
+ * @lc app=leetcode id=1845 lang=cpp
+ *
+ * [1845] Seat Reservation Manager
+ *
+ * https://leetcode.com/problems/seat-reservation-manager/description/
+ *
+ * algorithms
+ * Medium (66.49%)
+ * Likes:    1462
+ * Dislikes: 91
+ * Total Accepted:    143.5K
+ * Total Submissions: 215K
+ * Testcase Example:  '["SeatManager","reserve","reserve","unreserve","reserve","reserve","reserve","reserve","unreserve"]\n' +
+  '[[5],[],[],[2],[],[],[],[],[5]]'
+ *
+ * Design a system that manages the reservation state of n seats that are
+ * numbered from 1 to n.
+ * 
+ * Implement the SeatManager class:
+ * 
+ * 
+ * SeatManager(int n) Initializes a SeatManager object that will manage n seats
+ * numbered from 1 to n. All seats are initially available.
+ * int reserve() Fetches the smallest-numbered unreserved seat, reserves it,
+ * and returns its number.
+ * void unreserve(int seatNumber) Unreserves the seat with the given
+ * seatNumber.
+ * 
+ * 
+ * 
+ * Example 1:
+ * 
+ * 
+ * Input
+ * ["SeatManager", "reserve", "reserve", "unreserve", "reserve", "reserve",
+ * "reserve", "reserve", "unreserve"]
+ * [[5], [], [], [2], [], [], [], [], [5]]
+ * Output
+ * [null, 1, 2, null, 2, 3, 4, 5, null]
+ * 
+ * Explanation
+ * SeatManager seatManager = new SeatManager(5); // Initializes a SeatManager
+ * with 5 seats.
+ * seatManager.reserve();    // All seats are available, so return the lowest
+ * numbered seat, which is 1.
+ * seatManager.reserve();    // The available seats are [2,3,4,5], so return
+ * the lowest of them, which is 2.
+ * seatManager.unreserve(2); // Unreserve seat 2, so now the available seats
+ * are [2,3,4,5].
+ * seatManager.reserve();    // The available seats are [2,3,4,5], so return
+ * the lowest of them, which is 2.
+ * seatManager.reserve();    // The available seats are [3,4,5], so return the
+ * lowest of them, which is 3.
+ * seatManager.reserve();    // The available seats are [4,5], so return the
+ * lowest of them, which is 4.
+ * seatManager.reserve();    // The only available seat is seat 5, so return 5.
+ * seatManager.unreserve(5); // Unreserve seat 5, so now the available seats
+ * are [5].
+ * 
+ * 
+ * 
+ * Constraints:
+ * 
+ * 
+ * 1 <= n <= 10^5
+ * 1 <= seatNumber <= n
+ * For each call to reserve, it is guaranteed that there will be at least one
+ * unreserved seat.
+ * For each call to unreserve, it is guaranteed that seatNumber will be
+ * reserved.
+ * At most 10^5 calls in total will be made to reserve and unreserve.
+ * 
+ * 
+ */
+#include <vector>
+#include <queue>
+#include <algorithm>
+using namespace std;
+// @lc code=start
+class SeatManager {
+private:
+    int seats = 0;
+    priority_queue<int, vector<int>, greater<>> available;
+
+public:
+    SeatManager(int) {}
+
+    int reserve() {
+        if (!available.empty()) { // 有空出来的椅子
+            int seatNumber = available.top(); // 坐编号最小的
+            available.pop();
+            return seatNumber;
+        }
+        return ++seats; // 添加一把新的椅子
+    }
+
+    void unreserve(int seatNumber) {
+        available.push(seatNumber); // 有人离开了椅子
+    }
+};
+
+/**
+ * Your SeatManager object will be instantiated and called as such:
+ * SeatManager* obj = new SeatManager(n);
+ * int param_1 = obj->reserve();
+ * obj->unreserve(seatNumber);
+ */
+// @lc code=end
+

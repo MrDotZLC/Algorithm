@@ -7,10 +7,10 @@
  *
  * algorithms
  * Medium (36.09%)
- * Likes:    222
- * Dislikes: 28
- * Total Accepted:    23.8K
- * Total Submissions: 65.9K
+ * Likes:    228
+ * Dislikes: 32
+ * Total Accepted:    24.3K
+ * Total Submissions: 66.8K
  * Testcase Example:  '4\n[2,1,1]'
  *
  * You are given an integer mountainHeight denoting the height of a mountain.
@@ -137,7 +137,7 @@ public:
         return ans;
     }
 
-    // 二分答案上界优化
+    // 二分答案
     long long minNumberOfSeconds(int mountainHeight, vector<int>& workerTimes) {
         auto check = [&](long long m) {
             int left_h = mountainHeight;
@@ -165,35 +165,6 @@ public:
         }
         return R;
     }
-
-    // 二分答案
-    long long minNumberOfSeconds2(int mountainHeight, vector<int>& workerTimes) {
-        auto check = [&](long long m) {
-            int left_h = mountainHeight;
-            for (int t : workerTimes) {
-                left_h -= ((int) sqrt(m / t * 8 + 1) - 1) / 2;
-                if (left_h <= 0) {
-                    return true;
-                }
-            }
-            return false;
-        };
-
-        int max_t = *max_element(workerTimes.begin(), workerTimes.end());
-        int h = (mountainHeight - 1) / workerTimes.size() + 1;
-        long long left = 0, right = (long long) max_t * h * (h + 1) / 2;
-        while (left + 1 < right) {
-            long long mid = (left + right) / 2;
-            (check(mid) ? right : left) = mid;
-        }
-        return right;
-    }
 };
 // @lc code=end
 
-int main() {
-    Solution sol;
-
-    vector<int> workerTimes = {2,1,1,4,5,6,7,8,9,12,2,3,4,1,1};
-    sol.minNumberOfSeconds2(20000, workerTimes);
-}
