@@ -90,7 +90,7 @@ public:
 
     // 递推
     int combinationSum4(vector<int>& nums, int target) {
-        vector<long long> f(target + 1);
+        vector<__int128_t> f(target + 1);
         f[0] = 1;
         for (int i = 1; i <= target; i++) {
             for (int x : nums) {
