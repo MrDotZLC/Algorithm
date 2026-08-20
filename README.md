@@ -20,9 +20,9 @@ It includes problems and solutions from LeetCode and other platforms.
 
 ## 🚀 Progress Tracker
 
-| Platform    | Solved | Notes           |
-|-------------|--------|-----------------|
-| LeetCode    | 465    | Continuously updating |
+| Platform    | Solved | Notes                 |
+|-------------|--------|-----------------------|
+| LeetCode    |  810   | Continuously updating |
 
 ## 🛠 Environment
 
