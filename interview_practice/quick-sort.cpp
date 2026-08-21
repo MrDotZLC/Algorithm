@@ -68,8 +68,6 @@ void quick_sort_3_way(vector<int>& arr, int l, int r) {
     quick_sort_3_way(arr, gt + 1, r);         // 递归 > pivot 段
 }
 
-
-
 int main() {
     vector<int> arr = {4, 6, 3, 2, 10, 999, -999};
     quick_sort_3_way(arr, 0, int(arr.size()) - 1);
