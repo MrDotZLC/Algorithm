@@ -46,7 +46,7 @@ int main() {
     long long modulus = 1e9+7;
 
     cout << "integer fast pow, base=" << base 
-         << ", exp=" << exp << ", res=" << fpi(base, exp, modulus) << endl;
+         << ", exp=" << exp << ", res=" << fast_pow_integer(base, exp, modulus) << endl;
 
 
     double base2 = 0.5;
@@ -54,6 +54,6 @@ int main() {
     // int exp2 = INT_MIN;
 
     cout << "double fast pow, base2=" << base2 
-         << ", exp2=" << exp2 << ", res=" << fpd(base2, exp2) << endl;
+         << ", exp2=" << exp2 << ", res=" << fast_pow_double(base2, exp2) << endl;
 
 }
