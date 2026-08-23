@@ -10,7 +10,7 @@ using namespace std;
 template<typename T>
 class BoundedMPMCQueue {
 public:
-    BoundedMPMCQueue(int cap) : cap_(cap) {}
+    BoundedMPMCQueue(size_t cap) : cap_(cap) {}
 
     // 生产者调用：阻塞到有空位
     void push(T val) {
