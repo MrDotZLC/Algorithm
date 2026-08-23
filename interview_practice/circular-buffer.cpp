@@ -1,5 +1,7 @@
 #include <vector>
 #include <stdexcept>
+#include <atomic>
+#include <optional>
 #include <iostream>
 using namespace std;
 
@@ -18,9 +20,9 @@ public:
         ++size_;
     }
 
-    T pop() {
+    optional<T> pop() {
         if (empty()) {
-            throw runtime_error("CircularBuffer is empty");
+            return nullopt;
         }
         T val = buf_[head_];
         head_ = (head_ + 1) % cap_;
@@ -46,6 +48,47 @@ private:
     int head_;
     int tail_;
     int size_;
+};
+
+// 无锁 SPSC 单生产者单消费者 循环队列
+// 注意：cap 必须为 2 的幂，利用位掩码替代取模（更快）
+template<typename T>
+class SPSCCirCularBuffer {
+public:
+    explicit SPSCCirCularBuffer(int cap)
+        : buf_(cap), mask_(cap - 1), head_(0), tail_(0) {
+        if ((cap & mask_) != 0) {
+            throw runtime_error("cap must be a power of 2!");
+        }
+    }
+
+    bool push(const T& val) {
+        size_t tail = tail_.load(memory_order_relaxed);
+        size_t next = (tail + 1) & mask_;
+        if (next == head_.load(memory_order_acquire)) {
+            return false;
+        }
+        buf_[tail] = val;
+        tail_.store(next, memory_order_release);
+        return true;
+    }
+
+    optional<T> pop() {
+        size_t head = head_.load(memory_order_relaxed);
+        if (head == tail_.load(memory_order_acquire)) {
+            return nullopt;
+        }
+        T val = buf_[head];
+        head_.store((head + 1) & mask_, memory_order_release);
+        return val;
+    }
+
+private:
+    vector<T> buf_;
+    size_t mask_;
+    atomic<size_t> head_;
+    char pad[64 - sizeof(size_t)];
+    atomic<size_t> tail_;
 };
 
 int main() {
@@ -92,7 +135,7 @@ int main() {
     cout << "\nPop elements:\n";
 
     while (!buffer.empty()) {
-        cout << buffer.pop() << endl;
+        cout << buffer.pop().value_or(-1) << endl;
     }
 
 
@@ -114,7 +157,7 @@ int main() {
     buffer.push(2);
 
     cout << "pop: "
-         << buffer.pop()
+         << buffer.pop().value_or(-1)
          << endl;
 
 
@@ -123,7 +166,7 @@ int main() {
 
 
     while (!buffer.empty()) {
-        cout << buffer.pop() << " ";
+        cout << buffer.pop().value_or(-1) << " ";
     }
 
     cout << endl;
