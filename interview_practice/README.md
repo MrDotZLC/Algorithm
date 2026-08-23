@@ -28,7 +28,7 @@
 - 线性插值
 - 双线性插值
 - 向量外积
-- 矩阵链乘：$$(A_{1 \times 256} \cdot B_{256 \times 128}) \cdot C_{128 \times 256}$$
+- 矩阵链乘：$(A_{1 \times 256} \cdot B_{256 \times 128}) \cdot C_{128 \times 256}$
 
 ### 1.4 ML 算法（CPU）
 
