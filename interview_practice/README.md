@@ -28,7 +28,7 @@
 - 线性插值
 - 双线性插值
 - 向量外积
-- 矩阵链乘：$(A_{1\times256}\cdot B_{256\times128})\cdot C_{128\times256}$
+- 矩阵链乘：$(A_{1 \times 256} \cdot B_{256 \times 128}) \cdot C_{128 \times 256}$
 
 ### 1.4 ML 算法（CPU）
 
@@ -49,5 +49,5 @@
 
 - 单例模式
 
-## CUDA
+## 2. CUDA 题目
 < 见 [CUDA 面试题目](https://github.com/MrDotZLC/cuda_practice/tree/main/7_interview_practice)
