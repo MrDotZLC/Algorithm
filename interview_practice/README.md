@@ -44,7 +44,7 @@ $(A_{1 \times 256} \cdot B_{256 \times 128}) \cdot C_{128 \times 256}$
 - Flow Matching Model 采样
 - 支持 Broadcast 的 4D Tensor Elementwise Mul
 - Embedding Sparse Feature Pooling：
-$$C[i] = \sum_{j:,A[j]=i} B[j]$$
+$C[i] = \sum_{j:,A[j]=i} B[j]$
 - 井字棋判胜
 
 ### 1.5 设计模式
