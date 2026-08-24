@@ -5,7 +5,7 @@
   "editor.formatOnSave": false, // 保存时自动格式化
   "clang-format.style": "file", // 使用 .clang-format 文件
   "code-runner.executorMap": {
-    "cpp": "if (!(Test-Path -Path './.build')) { New-Item -ItemType Directory -Path './.build' } ; g++ -g -mconsole -I\"./Algorithm/\" $fullFileName -o \"./.build/$fileNameWithoutExt.exe\"; .\\.build\\$fileNameWithoutExt.exe;"
+    "cpp": "if (!(Test-Path -Path './.build')) { New-Item -ItemType Directory -Path './.build' } ; g++ -std=c++20 -g -mconsole -I\"./Algorithm/\" $fullFileName -o \"./.build/$fileNameWithoutExt.exe\"; .\\.build\\$fileNameWithoutExt.exe;"
   },
   "code-runner.runInTerminal": true,
   "code-runner.saveFileBeforeRun": true,
