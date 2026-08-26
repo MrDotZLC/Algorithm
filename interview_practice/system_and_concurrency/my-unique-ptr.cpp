@@ -5,20 +5,25 @@
 template<typename T, typename Deleter = std::default_delete<T>>
 class MyUniquePtr {
 public:
+    // 构造：接管裸指针（不隐式转换，explicit 防止意外赋值）
     MyUniquePtr(T* ptr = nullptr, Deleter deleter = Deleter{})
         : ptr_(ptr), deleter_(std::move(deleter)) {}
 
+    // 析构：调用 deleter 释放资源
     ~MyUniquePtr() {
         if (ptr_) deleter_(ptr_);
     }
 
+    // ── 禁止拷贝（独占所有权）
     MyUniquePtr(const MyUniquePtr&) = delete;
     MyUniquePtr& operator=(const MyUniquePtr&) = delete;
 
+    // ── 移动构造：转移所有权，来源置空
     MyUniquePtr(MyUniquePtr&& other)
         : ptr_(std::exchange(other.ptr_, nullptr))
         , deleter_(std::move(other.deleter_)) {}
 
+    // ── 移动赋值：先释放自身，再接管来源
     MyUniquePtr& operator=(MyUniquePtr&& other) {
         if (this != &other) {
             if (ptr_) deleter_(ptr_);
@@ -28,15 +33,18 @@ public:
         return *this;
     }
 
+    // ── 访问接口
     T* get() const noexcept { return ptr_; }
     T* operator->() const noexcept { return ptr_; }
     T& operator*() const { return *ptr_; }
     explicit operator bool() const noexcept { return ptr_ != nullptr; }
 
+    // 释放所有权（返回裸指针，调用方负责删除）
     T* release() noexcept {
         return std::exchange(ptr_, nullptr);
     }
 
+    // 重置：释放当前资源，持有新指针
     void reset(T* ptr = nullptr) noexcept {
         if (ptr_) deleter_(ptr_);
         ptr_= ptr;
