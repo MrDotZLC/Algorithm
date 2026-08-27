@@ -31,6 +31,8 @@ void print_in_order(int N, int M) {
     for (auto& t : threads) t.join();
 }
 
+// 每个线程有自己的信号量，形成环形"接力棒"
+// thread[i] 完成后 release thread[(i+1)%N] 的信号量
 void print_in_order_semaphore(int N, int M) {
     // 初始化：thread-0 的优先级为 1（先行），其余为 0
     vector<unique_ptr<counting_semaphore<1>>> sems;

@@ -4,6 +4,7 @@
 using namespace std;
 
 // 给定 $n$ 个区间 $[l_i, r_i]$，找出所有被 **至少 $k$ 个区间覆盖** 的点（或连续区间段）。
+// 输入区间为整数闭区间 [l, r]
 // 差分数组解法，O(n \log n)
 vector<pair<int, int>> 
 kCoverageIntervals(const vector<pair<int, int>>& intervals, int k) {
