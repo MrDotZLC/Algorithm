@@ -14,7 +14,7 @@ std::vector<float> layer_norm_naive(const std::vector<float>& x,
     float eps = 1e-5f) {
     const size_t N = x.size();
     // mean μ 均值
-    float mean = std::accumulate(x.begin(), x.end(), 0.0) / N;
+    float mean = std::accumulate(x.begin(), x.end(), 0.0f) / N;
 
     // variance σ^2 方差
     float variance = 0.f;
@@ -26,7 +26,7 @@ std::vector<float> layer_norm_naive(const std::vector<float>& x,
 
     std::vector<float> res(N);
     // norm + project 归一化+仿射变换
-    float inv_std = 1.0 / std::sqrt(variance + eps);
+    float inv_std = 1.0f / std::sqrt(variance + eps);
     for (size_t i = 0; i < N; ++i) {
         res[i] = gamma[i] * ((x[i] - mean) * inv_std) + beta[i];
     }
@@ -60,7 +60,7 @@ std::vector<float> layer_norm_welford_online(const std::vector<float>& x,
 
     std::vector<float> res(N);
     // norm + project 归一化+仿射变换
-    float inv_std = 1.0 / std::sqrt(variance + eps);
+    float inv_std = 1.0f / std::sqrt(variance + eps);
     for (size_t i = 0; i < N; ++i) {
         res[i] = gamma[i] * ((x[i] - mean) * inv_std) + beta[i];
     }
@@ -115,6 +115,9 @@ std::vector<float> layer_norm_welford_online_merge(
     float eps = 1e-5f) {
     
     size_t N = x.size();
+    
+    if (block_size == 0 || N == 0) return {};
+
     std::vector<WelfordState> states;
     size_t num_block = (N + block_size - 1) / block_size;
 
@@ -139,7 +142,7 @@ std::vector<float> layer_norm_welford_online_merge(
 
     float mean = global.mean;
     float variance = global.sum_squared_error / global.cnt;
-    float inv_std = 1.0 / std::sqrt(variance + eps);
+    float inv_std = 1.0f / std::sqrt(variance + eps);
 
     std::vector<float> res(N);
     // norm + project 归一化+仿射变换
