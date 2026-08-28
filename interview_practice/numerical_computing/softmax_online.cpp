@@ -10,7 +10,7 @@
 // d_new = d_old * exp(m_old - m_new) + exp(x - m_new)
 
 std::vector<float> softmax_online(const std::vector<float>& x) {
-    float m = 0.f;
+    float m = -INF_MAX;
     float d = 0.f;
 
     for (const float& v : x) {
@@ -45,7 +45,7 @@ int main() {
     softmax_naive(x);
 
     sum = 0.0f;
-    
+
     for (float p : y) {
         std::cout << p << " ";
         sum += p;
