@@ -1,3 +1,4 @@
+// Meyer's Singleton
 class Singleton {
 public:
     static Singleton& get_instance() {
