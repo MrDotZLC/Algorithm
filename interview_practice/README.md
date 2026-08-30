@@ -28,28 +28,20 @@
 - 线性插值
 - 双线性插值
 - 向量外积
-- 矩阵链乘：
-$(A_{1 \times 256} \cdot B_{256 \times 128}) \cdot C_{128 \times 256}$
 
 ### 1.4 ML 算法（CPU）
 
-- 交叉熵损失
-- 线性回归 SGD
+- 单样本多分类硬编码交叉熵损失
+- 多标签二分类交叉熵损失
+- KL 分散度损失（KL Divergence Loss）
 - Softmax
 - Online Softmax
 - Layer Norm
 - Attention 计算
-- Linear Attention
+- Multi-Head Attention
 - MoE
-- Flow Matching Model 采样
 - 支持 Broadcast 的 4D Tensor Elementwise Mul
-- Embedding Sparse Feature Pooling：
-$C[i] = \sum_{j:,A[j]=i} B[j]$
-- 井字棋判胜
 
 ### 1.5 设计模式
 
 - 单例模式
-
-## 2. CUDA 题目
-< 见 [CUDA 面试题目](https://github.com/MrDotZLC/cuda_practice/tree/main/7_interview_practice)
